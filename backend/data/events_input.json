@@ -1,0 +1,14 @@
+[
+  {"id": "binan-2019-05", "place": "Biñan", "date": null, "month": "2019-05",
+   "source_name": "UP Diliman", "source_url": "", "note": "Fill in the exact date and link."},
+  {"id": "pila-2019-05", "place": "Pila", "date": null, "month": "2019-05",
+   "source_name": "UP Diliman", "source_url": "", "note": "Fill in the exact date and link."},
+  {"id": "taguig-2025-04", "place": "Taguig", "date": null, "month": "2025-04",
+   "source_name": "", "source_url": "", "note": "Fill in the exact date and link."},
+  {"id": "binangonan-2026-07", "place": "Binangonan", "date": null, "month": "2026-07",
+   "source_name": "", "source_url": "", "note": "Fill in the exact date and link."},
+  {"id": "pililla-2026-07", "place": "Pililla", "date": null, "month": "2026-07",
+   "source_name": "", "source_url": "", "note": "Fill in the exact date and link."},
+  {"id": "jalajala-2026-09-01", "place": "Jala-jala", "date": "2026-09-01", "month": "2026-09",
+   "source_name": "The Star", "source_url": "", "note": "Over 20,000 kg of fish. Add the link."}
+]

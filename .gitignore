@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Downloaded raw data (large, can be re-created by the pipeline)
+backend/cache/
+
+# Generated results
+# Keep these tracked if teammates should see the map without running the pipeline.
+# Delete the next line to commit them (about 5 MB).
+backend/output/
+
+# Node / React
+node_modules/
+frontend/dist/
+
+# Secrets and local settings
+.env
+.env.*
+*.pem
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,50 @@
+{
+  "levels": {
+    "Low": {
+      "actions": [
+        {
+          "text": "Normal routine. Check the app weekly.",
+          "source": "Bantay Lawa app guidance"
+        }
+      ]
+    },
+    "Watch": {
+      "actions": [
+        {
+          "text": "Check the app daily.",
+          "source": "Bantay Lawa app guidance"
+        },
+        {
+          "text": "Keep stocking numbers appropriate so fish do not run short of oxygen.",
+          "source": "BFAR via PNA, 2023"
+        },
+        {
+          "text": "Get ready for early or partial harvest.",
+          "source": "BFAR via PNA, 2023 (early harvest advice)"
+        }
+      ]
+    },
+    "High": {
+      "actions": [
+        {
+          "text": "Begin early or partial harvest if possible.",
+          "source": "BFAR via PNA, 2023"
+        },
+        {
+          "text": "Add oxygen with tanks and pumps.",
+          "source": "BFAR Taal advisory, Inquirer"
+        }
+      ]
+    },
+    "Unknown": {
+      "actions": [
+        {
+          "text": "No clear satellite image in the last 10 days. Use your own field checks.",
+          "source": "Bantay Lawa app guidance"
+        }
+      ]
+    }
+  },
+  "limit": "Early harvest depends on a buyer. A Taal Lake operator group said the market cannot absorb everything (Inquirer).",
+  "oxygen_link": "The 2019 Biñan and Pila fish kill was blamed on low dissolved oxygen after an algal bloom (UP Diliman)."
+}
