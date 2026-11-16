@@ -43,9 +43,9 @@ export default function NdciChart({ series, date }) {
         {t(date) >= x0 && t(date) <= x1 && <line x1={X(t(date))} x2={X(t(date))} y1={M.t} y2={H - M.b} className="today" />}
       </svg>
       <figcaption>
-        <span className="key cutoff-key">Dashed: algae cutoff</span>
-        <span className="key event-key">Red: reported fish kill</span>
-        <span className="key today-key">Dark: selected date</span>
+        <span className="key-line cutoff-key">Algae cutoff</span>
+        <span className="key-line event-key">Reported fish kill</span>
+        <span className="key-line">Selected date</span>
       </figcaption>
     </figure>
   );

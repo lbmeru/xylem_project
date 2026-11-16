@@ -74,17 +74,21 @@ npm install
 
 ## Run the data pipeline
 
-This downloads the data and calculates the risk levels. Run it from the `backend` folder:
+This downloads the data, calculates the risk levels, checks the rule against past fish kills, and builds the 5-day forecast. Run it from the `backend` folder (use `python` instead of `python3` on Windows):
 
 ```bash
-python3 -m project.cli zones weather ndci levels
+python3 -m project.cli zones ndci weather levels events backtest forecast
 ```
 
-To test with less data first, add a start date:
+Keep the order. `levels` fixes the cutoffs before `events` and `backtest` look at any fish kill.
+
+The 2019 fish kills need data back to 2019, so do not set a start date for the real run. To try the pipeline quickly first, set one (this makes the 2019 and 2020 events show "no data"):
 
 ```bash
-BL_START_DATE=2025-01-01 python3 -m project.cli zones weather ndci levels
+BL_START_DATE=2025-01-01 python3 -m project.cli zones ndci weather levels events backtest forecast
 ```
+
+On Windows PowerShell, set variables like this instead of `export`: `$env:EE_PROJECT="your-project-id"` and `$env:BL_START_DATE="2025-01-01"`.
 
 On the first run it prints a Google sign-in link:
 
@@ -127,10 +131,22 @@ Stop either terminal with **Ctrl+C**.
 To pull the newest satellite and weather data, run in `backend`:
 
 ```bash
-python3 -m project.cli weather ndci levels
+python3 -m project.cli weather ndci levels forecast
 ```
 
 The API picks up the new files on its own, so you don't need to restart it. Refresh the browser.
+
+## How the 5-day forecast works
+
+`forecast` predicts each zone's algae reading (NDCI) for the next 5 days, then applies the same Low, Watch, High rule to the predicted reading and Open-Meteo's weather forecast.
+
+- It trains on pairs of clear readings of the same zone up to 15 days apart. Inputs are the earlier reading, the recent trend, the zone's average, the season, and the weather between the two dates. The target is the change in NDCI.
+- It tries "no change", ridge regression and gradient boosting. The last 20% of dates are held out as a test set and never used for training.
+- If no model beats "no change" on that test set, the forecast keeps the latest NDCI and only the weather signals move. The app says which case applies and shows the test error.
+- It never uses fish-kill events, so the backtest stays an independent check.
+- Satellite images are blocked by cloud, so a zone with no clear image in the last 10 days has no forecast.
+
+Check it works with `python3 -m pytest tests` in `backend`.
 
 ## Notes and limits
 

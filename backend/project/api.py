@@ -123,6 +123,11 @@ def create_app(output_dir: Path | None = None, data_dir: Path | None = None) -> 
     def backtest():
         return store.get("backtest.json")
 
+    @app.get("/api/forecast")
+    def forecast():
+        """Five-day forecast for every zone, plus how the model did on held-out past dates."""
+        return store.get("forecast.json")
+
     @app.get("/api/response-cards")
     def cards():
         return store.get("response_cards.json", base="data")

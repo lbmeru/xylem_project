@@ -1,4 +1,4 @@
-# project web (React + Vite)
+# Bantay Lawa web (React + Vite)
 
     npm install
     npm run dev        # http://localhost:5173, proxies /api to http://localhost:8000

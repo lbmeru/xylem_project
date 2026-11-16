@@ -17,5 +17,6 @@ export const api = {
   series: (id) => get(`/api/zones/${id}/series`),
   events: () => get("/api/events"),
   backtest: () => get("/api/backtest"),
+  forecast: () => get("/api/forecast"),
   cards: () => get("/api/response-cards"),
 };

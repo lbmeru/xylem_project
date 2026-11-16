@@ -39,6 +39,14 @@ LEVELS = ["Low", "Watch", "High", "Unknown"]
 # ---- Backtest -----------------------------------------------------------
 EVENT_LOOKBACK_DAYS = 7
 
+# ---- Forecast -----------------------------------------------------------
+FORECAST_DAYS = 5               # days ahead to predict, counted from today
+MAX_PAIR_GAP_DAYS = 15          # longest gap between two satellite readings used for training
+MIN_HISTORY_OBS = 10            # clear readings a zone needs before it can be forecast
+MIN_PAIRS = 200                 # training pairs needed before any model is tried
+FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
+FORECAST_PAST_DAYS = 14         # recent past days pulled with the forecast to fill the archive lag
+
 # ---- Weather ------------------------------------------------------------
 OPEN_METEO_URL = "https://archive-api.open-meteo.com/v1/archive"
 MIN_HOURS_PER_DAY = 18
