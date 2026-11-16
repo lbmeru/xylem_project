@@ -5,6 +5,9 @@ import { api } from "./api.js";
 import { LEVELS, levelOf, addDays } from "./levels.js";
 import ZonePanel from "./ZonePanel.jsx";
 
+/* Laguna de Bay plus nearby towns. The map cannot be dragged or tiled outside this box. */
+const LAKE_AREA = [[13.95, 120.85], [14.85, 121.65]];
+
 function FitBounds({ data }) {
   const map = useMap();
   useEffect(() => {
@@ -106,9 +109,10 @@ export default function MapPage() {
           </ul>
         </div>
         <div className="map-wrap">
-          <MapContainer center={[14.37, 121.2]} zoom={10} className="map">
+          <MapContainer center={[14.37, 121.2]} zoom={10} minZoom={10} maxZoom={14}
+                        maxBounds={LAKE_AREA} maxBoundsViscosity={1} className="map">
             <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                       url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                       url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" bounds={LAKE_AREA} />
             <GeoJSON key={`${date}-${zoneId}`} data={data} style={style}
                      onEachFeature={(f, layer) => {
                        const p = f.properties;
