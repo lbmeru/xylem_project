@@ -21,8 +21,8 @@ export default function App() {
     <div className="app">
       <header className="top">
         <a className="brand" href="#/">
-          <span className="brand-name">Lake Breathing</span>
-          <span className="brand-sub">First Form: Enhanced Monitoring System</span>
+          <span className="brand-name">Lake Breathing, First Form</span>
+          <span className="brand-sub">Enhanced Monitoring System</span>
         </a>
         <nav aria-label="Main">
           <a href="#/" aria-current={current("map")}>Map</a>

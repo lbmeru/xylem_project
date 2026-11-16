@@ -2,7 +2,7 @@
 export default function AboutPage() {
   return (
     <main className="about-page">
-      <h1>About Lake Breathing</h1>
+      <h1>About Lake Breathing, First Form</h1>
 
       <section aria-labelledby="solution-h">
         <h2 id="solution-h">Proposed solution</h2>
