@@ -24,8 +24,8 @@ This is a simple rule, not a trained model. NDCI is a relative algae signal, not
 
 - Python 3.10 or newer
 - Node.js 18 or newer
-- A Google account (Gmail works)
-- A free Google Cloud project registered for Earth Engine, non-commercial use (see "One-time Earth Engine setup")
+
+The generated data is already in `backend/output/`, so a fresh clone runs the website without the data pipeline. You only need a Google account and Earth Engine to refresh the data (see "Refresh the data").
 
 ## Project structure
 
@@ -33,48 +33,74 @@ This is a simple rule, not a trained model. NDCI is a relative algae signal, not
 Xylem_project/
 ├── backend/
 │   ├── project/        Python code (pipeline + API)
-│   ├── data/           lake outline, response cards
-│   ├── output/         generated JSON the website reads
-│   ├── cache/          downloaded raw data (safe to keep)
+│   ├── data/           lake outline, fish-kill events, response cards
+│   ├── output/         generated JSON the website reads (committed)
+│   ├── cache/          downloaded raw data (not committed, only for the pipeline)
 │   └── requirements.txt
 └── frontend/           React website
 ```
 
-## One-time Earth Engine setup
+## Run the website
 
-1. Go to https://console.cloud.google.com and sign in.
+Use `python` instead of `python3` on Windows.
+
+**1. Install the backend packages** (once, from the repo folder):
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+**2. Terminal 1: backend API** (in `backend`):
+
+```bash
+cd backend
+python3 -m uvicorn project.api:app --reload
+```
+
+Wait for `Application startup complete`. Check http://localhost:8000/api/health. It should show `{"ok":true}`.
+
+**3. Terminal 2: website** (in `frontend`):
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+You only need `npm install` the first time. Open **http://localhost:5173** in your browser. Click a zone on the map to see its level, the three signals, what to do, the 5-day forecast and the algae chart. Use the date box to look at other days.
+
+Stop either terminal with **Ctrl+C**.
+
+## Refresh the data
+
+Only needed to pull newer satellite and weather data. The website works without this.
+
+### One-time Earth Engine setup
+
+1. Go to https://console.cloud.google.com and sign in with a Google account.
 2. Click **Select a project**, then **New project**. Name it and click **Create**.
 3. Copy the **Project ID** shown under the name.
 4. Open https://code.earthengine.google.com/register.
 5. Choose **Unpaid usage**, then **Academic & Research** or **Non-profit**.
 6. Select your project and finish the form. Choose the **Community** tier, which needs no payment card.
 
-## One-time setup on your computer
+### Run the pipeline
 
-### Backend
-
-Open a terminal in the `backend` folder:
+In the `backend` folder, set your project ID:
 
 ```bash
-cd backend
-pip install -r requirements.txt
 export EE_PROJECT=your-project-id
 ```
 
-Replace `your-project-id` with the Project ID from step 3 above. Run the `export` line again in every new terminal.
+On Windows PowerShell use `$env:EE_PROJECT="your-project-id"` instead. Run it again in every new terminal.
 
-### Frontend
-
-Open a second terminal in the `frontend` folder:
+To pull the newest data (the usual refresh):
 
 ```bash
-cd frontend
-npm install
+python3 -m project.cli weather ndci levels forecast
 ```
 
-## Run the data pipeline
-
-This downloads the data, calculates the risk levels, checks the rule against past fish kills, and builds the 5-day forecast. Run it from the `backend` folder (use `python` instead of `python3` on Windows):
+To rebuild everything from scratch:
 
 ```bash
 python3 -m project.cli zones ndci weather levels events backtest forecast
@@ -82,13 +108,7 @@ python3 -m project.cli zones ndci weather levels events backtest forecast
 
 Keep the order. `levels` fixes the cutoffs before `events` and `backtest` look at any fish kill.
 
-The 2019 fish kills need data back to 2019, so do not set a start date for the real run. To try the pipeline quickly first, set one (this makes the 2019 and 2020 events show "no data"):
-
-```bash
-BL_START_DATE=2025-01-01 python3 -m project.cli zones ndci weather levels events backtest forecast
-```
-
-On Windows PowerShell, set variables like this instead of `export`: `$env:EE_PROJECT="your-project-id"` and `$env:BL_START_DATE="2025-01-01"`.
+The 2019 fish kills need data back to 2019, so do not set a start date for the real run. To try the pipeline quickly, set one (this makes the 2019 and 2020 events show "no data"): `BL_START_DATE=2025-01-01` (PowerShell: `$env:BL_START_DATE="2025-01-01"`).
 
 On the first run it prints a Google sign-in link:
 
@@ -96,45 +116,9 @@ On the first run it prints a Google sign-in link:
 2. Choose your Google account and click **Generate token**, then **Allow**.
 3. Copy the code shown and paste it back into the terminal. Press Enter.
 
-You only sign in once on a computer. The pipeline can take a long time, especially the satellite step. It saves its work as it goes, so if you stop it, running the same command again continues from where it left off.
+You only sign in once on a computer. The satellite step can take a long time. It saves its work as it goes, so running the same command again continues from where it left off.
 
-The results are written to `backend/output/`:
-
-- `zones.json`: the zones and their shapes
-- `daily_risk.json`: the risk level and signals for every zone and day
-
-## Run the website
-
-You need two terminals open at the same time.
-
-**Terminal 1: backend API** (in `backend`):
-
-```bash
-export EE_PROJECT=your-project-id
-python3 -m uvicorn project.api:app --reload
-```
-
-Wait for `Application startup complete`. Check http://localhost:8000/api/health. It should show `{"ok":true}`.
-
-**Terminal 2: website** (in `frontend`):
-
-```bash
-npm run dev
-```
-
-Open **http://localhost:5173** in your browser. Click a zone on the map to see its level, the three signals, what to do, and the algae chart. Use the date box to look at other days.
-
-Stop either terminal with **Ctrl+C**.
-
-## Refresh the data later
-
-To pull the newest satellite and weather data, run in `backend`:
-
-```bash
-python3 -m project.cli weather ndci levels forecast
-```
-
-The API picks up the new files on its own, so you don't need to restart it. Refresh the browser.
+The results are written to `backend/output/`. The API picks up the new files on its own, so you don't need to restart it. Refresh the browser. Commit `backend/output/` so others get the new data.
 
 ## How the 5-day forecast works
 
@@ -150,7 +134,7 @@ Check it works with `python3 -m pytest tests` in `backend`.
 
 ## Notes and limits
 
-- The newest weather data arrives about 5 days late, so the map shows risk "as of" the latest data date, not live.
+- The committed data is a snapshot. The map shows risk as of the last time the pipeline ran, until someone refreshes it.
 - Cloudy days are lost. A zone with no clear image in the last 10 days shows grey (Unknown).
 - The lake zones are squares of about 5 km cut from Earth Engine's water map.
 - Air temperature stands in for water temperature, which this project does not measure.
@@ -160,9 +144,9 @@ Check it works with `python3 -m pytest tests` in `backend`.
 
 | What you see | Fix |
 |---|---|
-| Website says "Can't load risk data" | The API is not running, or the pipeline has not finished. Start Terminal 1 and check `backend/output/` has `daily_risk.json`. |
+| Website says "Can't load risk data" | The API is not running. Start Terminal 1 and check `backend/output/` has `daily_risk.json`. |
 | `ECONNREFUSED` in the website terminal | Same as above: start the API first. |
-| `No module named ...` | Install the packages: `pip install -r requirements.txt` |
+| `No module named ...` | Install the packages: `pip install -r backend/requirements.txt` |
 | `No module named project.cli` | You are not in the `backend` folder, or `backend/project/` is missing files. |
 | Message asks for `EE_PROJECT` | Run `export EE_PROJECT=your-project-id` in that terminal. |
 | Sign-in code rejected | Run the pipeline command again to get a new link and code. |

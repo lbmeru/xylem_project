@@ -8,11 +8,6 @@ venv/
 # Downloaded raw data (large, can be re-created by the pipeline)
 backend/cache/
 
-# Generated results
-# Keep these tracked if teammates should see the map without running the pipeline.
-# Delete the next line to commit them (about 5 MB).
-backend/output/
-
 # Node / React
 node_modules/
 frontend/dist/

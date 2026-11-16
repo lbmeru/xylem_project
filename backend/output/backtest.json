@@ -1,0 +1,316 @@
+{
+  "meta": {
+    "as_of": "2026-11-16",
+    "caveat": "Checked against only the fish kills reported in the news. Unreported kills would turn some 'false alarms' into correct warnings. Too few events to call this accurate.",
+    "lookback_days": 7
+  },
+  "summary": {
+    "events_total": 8,
+    "events_tested": 8,
+    "hits": 5,
+    "misses": 1,
+    "no_data": 2,
+    "zone_weeks_total": 16851,
+    "zone_weeks_high": 700,
+    "false_alarm_zone_weeks": 695
+  },
+  "skipped": [],
+  "events": [
+    {
+      "id": "binan-2019-05",
+      "place": "Bi\u00f1an",
+      "zone_id": "Z58_317",
+      "date": "2019-05-04",
+      "levels_before": [
+        {
+          "date": "2019-04-27",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-04-28",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-04-29",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-04-30",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-01",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-02",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-03",
+          "level": "High"
+        }
+      ],
+      "result": "hit"
+    },
+    {
+      "id": "pila-2019-05",
+      "place": "Pila",
+      "zone_id": "Z64_315",
+      "date": "2019-05-12",
+      "levels_before": [
+        {
+          "date": "2019-05-05",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-06",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-07",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-08",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-09",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-10",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-05-11",
+          "level": "Watch"
+        }
+      ],
+      "result": "hit"
+    },
+    {
+      "id": "muntinlupa-2019-06",
+      "place": "Muntinlupa",
+      "zone_id": "Z58_318",
+      "date": "2019-06-08",
+      "levels_before": [
+        {
+          "date": "2019-06-01",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-06-02",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-06-03",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-06-04",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-06-05",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-06-06",
+          "level": "Watch"
+        },
+        {
+          "date": "2019-06-07",
+          "level": "Watch"
+        }
+      ],
+      "result": "hit"
+    },
+    {
+      "id": "pililla-2020-05",
+      "place": "Pililla",
+      "zone_id": "Z63_319",
+      "date": "2020-05-15",
+      "levels_before": [
+        {
+          "date": "2020-05-08",
+          "level": "Low"
+        },
+        {
+          "date": "2020-05-09",
+          "level": "Low"
+        },
+        {
+          "date": "2020-05-10",
+          "level": "Low"
+        },
+        {
+          "date": "2020-05-11",
+          "level": "Low"
+        },
+        {
+          "date": "2020-05-12",
+          "level": "Low"
+        },
+        {
+          "date": "2020-05-13",
+          "level": "Low"
+        },
+        {
+          "date": "2020-05-14",
+          "level": "Low"
+        }
+      ],
+      "result": "miss"
+    },
+    {
+      "id": "taguig-2025-04",
+      "place": "Taguig",
+      "zone_id": "Z58_320",
+      "date": "2025-04-02",
+      "levels_before": [
+        {
+          "date": "2025-03-26",
+          "level": "Unknown"
+        },
+        {
+          "date": "2025-03-27",
+          "level": "Unknown"
+        },
+        {
+          "date": "2025-03-28",
+          "level": "Unknown"
+        },
+        {
+          "date": "2025-03-29",
+          "level": "Unknown"
+        },
+        {
+          "date": "2025-03-30",
+          "level": "Unknown"
+        },
+        {
+          "date": "2025-03-31",
+          "level": "Unknown"
+        },
+        {
+          "date": "2025-04-01",
+          "level": "Unknown"
+        }
+      ],
+      "result": "no_data"
+    },
+    {
+      "id": "binangonan-2026-07",
+      "place": "Binangonan",
+      "zone_id": "Z60_319",
+      "date": "2026-07-10",
+      "levels_before": [
+        {
+          "date": "2026-07-03",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-07-04",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-07-05",
+          "level": "Watch"
+        },
+        {
+          "date": "2026-07-06",
+          "level": "High"
+        },
+        {
+          "date": "2026-07-07",
+          "level": "High"
+        },
+        {
+          "date": "2026-07-08",
+          "level": "Watch"
+        },
+        {
+          "date": "2026-07-09",
+          "level": "Watch"
+        }
+      ],
+      "result": "hit"
+    },
+    {
+      "id": "pililla-2026-07",
+      "place": "Pililla",
+      "zone_id": "Z63_319",
+      "date": "2026-07-21",
+      "levels_before": [
+        {
+          "date": "2026-07-14",
+          "level": "Low"
+        },
+        {
+          "date": "2026-07-15",
+          "level": "Watch"
+        },
+        {
+          "date": "2026-07-16",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-07-17",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-07-18",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-07-19",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-07-20",
+          "level": "Watch"
+        }
+      ],
+      "result": "hit"
+    },
+    {
+      "id": "jalajala-2026-09-01",
+      "place": "Jala-jala",
+      "zone_id": "Z63_317",
+      "date": "2026-09-01",
+      "levels_before": [
+        {
+          "date": "2026-08-25",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-08-26",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-08-27",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-08-28",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-08-29",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-08-30",
+          "level": "Unknown"
+        },
+        {
+          "date": "2026-08-31",
+          "level": "Unknown"
+        }
+      ],
+      "result": "no_data"
+    }
+  ]
+}

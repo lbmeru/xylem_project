@@ -1,0 +1,98 @@
+[
+  {
+    "id": "binan-2019-05",
+    "place": "Biñan",
+    "date": "2019-05-04",
+    "date_precision": "exact",
+    "month": "2019-05",
+    "source_name": "UP Diliman",
+    "source_url": "https://upd.edu.ph/seasonal-fish-kill-incident-leaves-thousands-of-unprofitable-commodity-fish-in-laguna-de-bay/",
+    "note": "Start of the kill as told by a Biñan fisherman in the article. He said it lasted to the end of May.",
+    "zone_id": "Z58_317",
+    "zone_distance_km": 1.5
+  },
+  {
+    "id": "pila-2019-05",
+    "place": "Pila",
+    "date": "2019-05-12",
+    "date_precision": "exact",
+    "month": "2019-05",
+    "source_name": "UP Diliman",
+    "source_url": "https://upd.edu.ph/seasonal-fish-kill-incident-leaves-thousands-of-unprofitable-commodity-fish-in-laguna-de-bay/",
+    "note": "Start of the kill in Barangay Linga as told by a Pila fisherman in the article.",
+    "zone_id": "Z64_315",
+    "zone_distance_km": 2.87
+  },
+  {
+    "id": "muntinlupa-2019-06",
+    "place": "Muntinlupa",
+    "date": "2019-06-08",
+    "date_precision": "approx",
+    "month": "2019-06",
+    "source_name": "ABS-CBN News",
+    "source_url": "https://www.abs-cbn.com/news/06/08/19/decaying-algae-causes-stench-fish-kill-in-muntinlupa-pens",
+    "note": "Fish kill in fish pens in Barangay Bayanan, blamed on decaying algae. The article gives no kill date, so the date is the day it was published.",
+    "zone_id": "Z58_318",
+    "zone_distance_km": 1.33
+  },
+  {
+    "id": "pililla-2020-05",
+    "place": "Pililla",
+    "date": "2020-05-15",
+    "date_precision": "approx",
+    "month": "2020-05",
+    "source_name": "Inquirer",
+    "source_url": "https://newsinfo.inquirer.net/1288931/after-lockdown-fish-kill-hits-laguna-de-bay",
+    "note": "A fish pen owner said the kill started around mid-May. LLDA counted at least 275 tons lost, mostly in 7 fish pens in Pililla. Also reported near Talim in Binangonan.",
+    "zone_id": "Z63_319",
+    "zone_distance_km": 1.94
+  },
+  {
+    "id": "taguig-2025-04",
+    "place": "Taguig",
+    "date": "2025-04-02",
+    "date_precision": "approx",
+    "month": "2025-04",
+    "source_name": "Manila Bulletin",
+    "source_url": "https://mb.com.ph/2025/4/21/fish-kill-recorded-in-taguig",
+    "note": "2,120 kg of dead fish collected April 2 to 18, 2025 on the Taguig lakeshore. Date is the first collection day, not a confirmed start of the kill.",
+    "zone_id": "Z58_320",
+    "zone_distance_km": 3.19
+  },
+  {
+    "id": "binangonan-2026-07",
+    "place": "Binangonan",
+    "date": "2026-07-10",
+    "date_precision": "approx",
+    "month": "2026-07",
+    "source_name": "The Manila Times",
+    "source_url": "https://www.manilatimes.net/2026/07/11/regions/fish-kill-in-laguna-lake-linked-to-manila-water-discharge/2382477",
+    "note": "Fisherfolk group Pamalakaya reported the kill on the Rizal side of the lake on July 10. It links it to alleged wastewater discharge in Barangay Ithan, Binangonan. That cause is an allegation. Date is the report date.",
+    "zone_id": "Z60_319",
+    "zone_distance_km": 0.4
+  },
+  {
+    "id": "pililla-2026-07",
+    "place": "Pililla",
+    "date": "2026-07-21",
+    "date_precision": "exact",
+    "month": "2026-07",
+    "source_name": "Inquirer",
+    "source_url": "https://newsinfo.inquirer.net/2268922/pcg-bfar-probe-fish-kill-in-pililla-waters",
+    "note": "Fisherfolk first saw floating dead fish in Pililla waters on July 21, 2026. Article published July 23.",
+    "zone_id": "Z63_319",
+    "zone_distance_km": 1.94
+  },
+  {
+    "id": "jalajala-2026-09-01",
+    "place": "Jala-jala",
+    "date": "2026-09-01",
+    "date_precision": "exact",
+    "month": "2026-09",
+    "source_name": "The Star",
+    "source_url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/01/over-20000-kg-of-fish-die-in-latest-laguna-de-bay-fish-kill-in-philippines",
+    "note": "Over 20,000 kg of tilapia and bighead carp, more than 30 fish cages.",
+    "zone_id": "Z63_317",
+    "zone_distance_km": 1.63
+  }
+]
