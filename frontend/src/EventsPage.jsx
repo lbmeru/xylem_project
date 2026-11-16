@@ -74,7 +74,7 @@ export default function EventsPage() {
 
       <p className="about-line">
         A simple rule checked on {s.events_tested} news-reported fish kills. Too few to measure accuracy, and not
-        a guarantee. <a href="#/about">About this project</a>
+        a guarantee.
       </p>
     </main>
   );

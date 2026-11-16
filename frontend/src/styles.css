@@ -30,7 +30,7 @@ body::after { width: 480px; height: 480px; right: -120px; bottom: -80px; backgro
 #root::before { width: 420px; height: 420px; left: 45%; bottom: 10%; background: var(--leaf); opacity: .35; }
 
 /* ---- glass recipe ---- */
-.top, .map-bar, .legend, .panel-col, .notice, .events-page, .about-page {
+.top, .map-bar, .legend, .panel-col, .notice, .events-page {
   background: var(--glass);
   -webkit-backdrop-filter: blur(18px) saturate(1.3);
   backdrop-filter: blur(18px) saturate(1.3);
@@ -39,10 +39,10 @@ body::after { width: 480px; height: 480px; right: -120px; bottom: -80px; backgro
   box-shadow: var(--glass-shadow);
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .top, .map-bar, .legend, .panel-col, .notice, .events-page, .about-page { background: var(--glass-solid); }
+  .top, .map-bar, .legend, .panel-col, .notice, .events-page { background: var(--glass-solid); }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .top, .map-bar, .legend, .panel-col, .notice, .events-page, .about-page {
+  .top, .map-bar, .legend, .panel-col, .notice, .events-page {
     background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none;
   }
 }
@@ -173,10 +173,10 @@ body::after { width: 480px; height: 480px; right: -120px; bottom: -80px; backgro
 .chart .cutoff-key::before { border-top: 2px dashed #b07d00; }
 .chart .event-key::before { border-top-color: var(--high); }
 
-/* ---- past events and about: one glass card on mint ---- */
-.notice, .events-page, .about-page { max-width: 920px; width: calc(100% - 24px); margin: 1.5rem auto 2.5rem; padding: 1.6rem 1.6rem 2rem; }
-.events-page a, .about-page a { color: var(--ink); text-decoration-color: var(--emerald); text-decoration-thickness: 2px; }
-.events-page a:hover, .about-page a:hover { background: var(--glass-strong); }
+/* ---- past events: one glass card on mint ---- */
+.notice, .events-page { max-width: 920px; width: calc(100% - 24px); margin: 1.5rem auto 2.5rem; padding: 1.6rem 1.6rem 2rem; }
+.events-page a { color: var(--ink); text-decoration-color: var(--emerald); text-decoration-thickness: 2px; }
+.events-page a:hover { background: var(--glass-strong); }
 .lede { max-width: 62ch; font-size: 1.1rem; margin: .6rem 0 1.2rem; }
 .lede strong { font-weight: 600; }
 .table-scroll { overflow-x: auto; }
@@ -193,11 +193,6 @@ tr.undated td { color: var(--muted); }
 .counts { margin: 0 0 .6rem; }
 .about-line { margin-top: 2.2rem; padding-top: .9rem; border-top: 2px solid var(--emerald); max-width: 65ch; }
 
-.about-page section { margin-top: 1.8rem; }
-.about-page h2 { font-size: 1.5rem; margin-bottom: .4rem; }
-.about-page p, .about-page li { max-width: 65ch; }
-.about-page ul { padding-left: 1.2rem; }
-.about-page li { margin-bottom: .4rem; }
 
 /* ---- phone: panel goes below the map ---- */
 @media (max-width: 860px) {
@@ -212,6 +207,6 @@ tr.undated td { color: var(--muted); }
   .panel-col { position: static; width: auto; max-height: none; overflow: visible; margin: 12px; flex: none; }
   .legend { display: flex; flex-wrap: wrap; gap: .3rem .9rem; left: 8px; right: 8px; bottom: 22px; padding: .35rem .6rem; font-size: .8rem; }
   .top { padding-top: .4rem; }
-  .notice, .events-page, .about-page { padding: 1.2rem 1rem 1.6rem; margin-top: 12px; }
+  .notice, .events-page { padding: 1.2rem 1rem 1.6rem; margin-top: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

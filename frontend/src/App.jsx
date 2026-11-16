@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import MapPage from "./MapPage.jsx";
 import EventsPage from "./EventsPage.jsx";
-import AboutPage from "./AboutPage.jsx";
 
-const ROUTES = { "#/events": "events", "#/about": "about" };
+const ROUTES = { "#/events": "events" };
 const routeOf = () => ROUTES[window.location.hash] || "map";
 
 export default function App() {
@@ -27,10 +26,9 @@ export default function App() {
         <nav aria-label="Main">
           <a href="#/" aria-current={current("map")}>Map</a>
           <a href="#/events" aria-current={current("events")}>Past events</a>
-          <a href="#/about" aria-current={current("about")}>About</a>
         </nav>
       </header>
-      {route === "events" ? <EventsPage /> : route === "about" ? <AboutPage /> : <MapPage />}
+      {route === "events" ? <EventsPage /> : <MapPage />}
     </div>
   );
 }
