@@ -1,5 +1,3 @@
-# HOW TO RUN
-
 # Lake Breathing, First Form: Enhanced Monitoring System
 
 A web map that gives each zone of Laguna de Bay a daily fish-kill risk level (Low, Watch, High, Unknown) from free satellite and weather data.
@@ -18,7 +16,7 @@ Each zone gets three yes/no checks:
 
 0 or 1 yes = Low, 2 = Watch, 3 = High. A zone with no clear satellite image in the last 10 days shows Unknown.
 
-This is a simple rule, not a trained model. NDCI is a relative algae signal, not a direct algae count.
+The Low/Watch/High levels are a simple rule, not a trained model. The 5-day forecast uses a small model (see below). NDCI is a relative algae signal, not a direct algae count.
 
 ## Requirements
 
@@ -97,7 +95,7 @@ On Windows PowerShell use `$env:EE_PROJECT="your-project-id"` instead. Run it ag
 To pull the newest data (the usual refresh):
 
 ```bash
-python3 -m project.cli weather ndci levels forecast
+python3 -m project.cli weather ndci levels backtest forecast
 ```
 
 To rebuild everything from scratch:
@@ -126,7 +124,7 @@ The results are written to `backend/output/`. The API picks up the new files on 
 
 - It trains on pairs of clear readings of the same zone up to 15 days apart. Inputs are the earlier reading, the recent trend, the zone's average, the season, and the weather between the two dates. The target is the change in NDCI.
 - It tries "no change", ridge regression and gradient boosting. The last 20% of dates are held out as a test set and never used for training.
-- If no model beats "no change" on that test set, the forecast keeps the latest NDCI and only the weather signals move. The app says which case applies and shows the test error.
+- If no model beats "no change" on that test set, the forecast keeps the latest NDCI and only the weather signals move. The app says which case applies.
 - It never uses fish-kill events, so the backtest stays an independent check.
 - Satellite images are blocked by cloud, so a zone with no clear image in the last 10 days has no forecast.
 
@@ -134,6 +132,7 @@ Check it works with `python3 -m pytest tests` in `backend`.
 
 ## Notes and limits
 
+- The last few days of weather come from Open-Meteo's recent-days data, so the latest map date is today.
 - The committed data is a snapshot. The map shows risk as of the last time the pipeline ran, until someone refreshes it.
 - Cloudy days are lost. A zone with no clear image in the last 10 days shows grey (Unknown).
 - The lake zones are squares of about 5 km cut from Earth Engine's water map.
@@ -151,4 +150,4 @@ Check it works with `python3 -m pytest tests` in `backend`.
 | Message asks for `EE_PROJECT` | Run `export EE_PROJECT=your-project-id` in that terminal. |
 | Sign-in code rejected | Run the pipeline command again to get a new link and code. |
 | Earth Engine quota error | The Community tier has a usage limit. Re-run with a later `BL_START_DATE`, or wait and run again. |
-| Command not found: `python` | Use `python3`. |
+| Command not found: `python3` | On Windows use `python`. |
