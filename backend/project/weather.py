@@ -2,7 +2,9 @@
 
 Free for non-commercial use, no API key.
   fetch():          historical archive (newest data lags ~5 days), used for the risk rule and training.
-  fetch_forecast(): the last two weeks plus the next week from the forecast API, used by the forecast step.
+                    Also calls fetch_forecast() so the levels step can fill the lag up to today.
+  fetch_forecast(): the last two weeks plus the next week from the forecast API, used by the
+                    levels step (up to today) and the forecast step.
 """
 import time
 
@@ -58,6 +60,7 @@ def fetch(end: pd.Timestamp | None = None) -> None:
             _fetch_range(p["centroid_lat"], p["centroid_lon"],
                          s.strftime("%Y-%m-%d"), e.strftime("%Y-%m-%d")).to_csv(path)
             time.sleep(0.3)
+    fetch_forecast()   # recent days the archive does not have yet, used by the levels step
 
 
 def fetch_forecast() -> None:

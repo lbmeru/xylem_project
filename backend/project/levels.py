@@ -109,7 +109,10 @@ def build(ndci_daily: pd.DataFrame, weather_by_zone: dict, zone_ids: list[str]) 
 
 def run() -> None:
     zone_ids = [f["properties"]["zone_id"] for f in load_zones()["features"]]
-    weather = {z: W.load(z) for z in zone_ids}
+    today = pd.Timestamp.today().normalize()
+    # The archive lags ~5 days. Fill the gap up to today from the forecast API cache,
+    # never past today: future days belong to forecast.json only.
+    weather = {z: W.load(z).combine_first(W.load_forecast(z).loc[:today]) for z in zone_ids}
     result = build(build_daily(), weather, zone_ids)
     (C.OUTPUT_DIR / "daily_risk.json").write_text(json.dumps(result, separators=(",", ":")), encoding="utf-8")
     print(f"daily_risk.json: {len(zone_ids)} zones x {len(result['dates'])} days, as of {result['meta']['as_of']}")
