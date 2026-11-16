@@ -8,7 +8,11 @@ import ZonePanel from "./ZonePanel.jsx";
 function FitBounds({ data }) {
   const map = useMap();
   useEffect(() => {
-    if (data?.features?.length) map.fitBounds(L.geoJSON(data).getBounds(), { padding: [20, 20] });
+    if (!data?.features?.length) return;
+    // On desktop the zone panel floats over the right of the map and the date pill over the top left.
+    const desktop = window.matchMedia("(min-width: 861px)").matches;
+    const pad = desktop ? { paddingTopLeft: [20, 72], paddingBottomRight: [440, 20] } : { padding: [20, 20] };
+    map.fitBounds(L.geoJSON(data).getBounds(), pad);
     // fit once, when zones first load
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.features?.length]);
@@ -86,7 +90,7 @@ export default function MapPage() {
     const lvl = levelOf(f.properties.level);
     return { className: `z-${(LEVELS[f.properties.level] ? f.properties.level : "Unknown").toLowerCase()}`,
              fillColor: lvl.color, fillOpacity: 0.92,
-             color: sel ? "#0f2430" : "#ffffff", weight: sel ? 3 : 1 };
+             color: sel ? "#0f3d2e" : "#ffffff", weight: sel ? 3 : 1 };
   };
 
   return (
