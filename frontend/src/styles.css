@@ -71,6 +71,27 @@ body::after { width: 480px; height: 480px; right: -120px; bottom: -80px; backgro
 .tally strong { font-family: var(--cond); font-size: 1.4rem; margin-right: .25rem; }
 .leaflet-container { background: #e3f1e6; font-family: var(--body); }
 .leaflet-tile-pane { filter: grayscale(1) contrast(.85) brightness(1.08); opacity: .5; }
+.basemap-satellite .leaflet-tile-pane { filter: none; opacity: 1; }
+.basemap-satellite .leaflet-container { background: #1c2b24; }
+/* over dark imagery the lighter glass is too see-through for the grey text, so use the stronger glass */
+.basemap-satellite :is(.map-bar, .legend, .panel-col, .basemap-toggle) { background: var(--glass-strong); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .basemap-satellite :is(.map-bar, .legend, .panel-col, .basemap-toggle) { background: var(--glass-solid); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .basemap-satellite :is(.map-bar, .legend, .panel-col, .basemap-toggle) { background: var(--glass-solid); }
+}
+.basemap-toggle { position: absolute; z-index: 800; left: 12px; top: 150px; display: flex; padding: 3px; gap: 2px;
+  background: var(--glass); -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid var(--glass-edge); border-radius: 999px; box-shadow: var(--glass-shadow); }
+.basemap-toggle button { font: inherit; font-size: .88rem; color: var(--ink); background: transparent; border: 0;
+  border-radius: 999px; padding: .25rem .8rem; cursor: pointer; }
+.basemap-toggle button:hover { background: var(--glass-strong); }
+.basemap-toggle button[aria-pressed="true"] { background: #fff; font-weight: 600; box-shadow: inset 0 -3px 0 var(--sun); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .basemap-toggle { background: var(--glass-solid); } }
+@media (prefers-reduced-transparency: reduce) {
+  .basemap-toggle { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
 .leaflet-top.leaflet-left { top: 72px; }
 .leaflet-bottom.leaflet-right { right: 424px; }
 .leaflet-control-attribution { border-radius: 8px 0 0 0; }
@@ -186,6 +207,7 @@ tr.undated td { color: var(--muted); }
   .map-bar { position: relative; z-index: 800; top: auto; left: auto; max-width: none; margin: 12px 12px 8px;
     border-radius: 20px; padding: .4rem .5rem; gap: .3rem .8rem; }
   .leaflet-top.leaflet-left { top: 0; }
+  .basemap-toggle { top: 10px; left: auto; right: 10px; }
   .leaflet-bottom.leaflet-right { right: 0; }
   .panel-col { position: static; width: auto; max-height: none; overflow: visible; margin: 12px; flex: none; }
   .legend { display: flex; flex-wrap: wrap; gap: .3rem .9rem; left: 8px; right: 8px; bottom: 22px; padding: .35rem .6rem; font-size: .8rem; }

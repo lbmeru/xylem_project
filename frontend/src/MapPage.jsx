@@ -5,6 +5,27 @@ import { api } from "./api.js";
 import { LEVELS, levelOf, addDays } from "./levels.js";
 import ZonePanel from "./ZonePanel.jsx";
 
+/* Base maps the user can switch between, like the Map / Satellite toggle in Google Maps. */
+const BASEMAPS = {
+  map: { label: "Map" },
+  satellite: { label: "Satellite" },
+};
+const BASEMAP_KEY = "lb-basemap";
+const savedBasemap = () => {
+  try { return BASEMAPS[localStorage.getItem(BASEMAP_KEY)] ? localStorage.getItem(BASEMAP_KEY) : "map"; }
+  catch { return "map"; }
+};
+
+function BasemapToggle({ value, onChange }) {
+  return (
+    <div className="basemap-toggle" role="group" aria-label="Map style">
+      {Object.entries(BASEMAPS).map(([k, b]) => (
+        <button key={k} type="button" aria-pressed={value === k} onClick={() => onChange(k)}>{b.label}</button>
+      ))}
+    </div>
+  );
+}
+
 function FitBounds({ data }) {
   const map = useMap();
   useEffect(() => {
@@ -58,6 +79,11 @@ function Patterns() {
 
 export default function MapPage() {
   const [meta, setMeta] = useState(null);
+  const [basemap, setBasemapState] = useState(savedBasemap);
+  const setBasemap = (k) => {
+    setBasemapState(k);
+    try { localStorage.setItem(BASEMAP_KEY, k); } catch { /* storage blocked: choice lasts this visit only */ }
+  };
   const [cards, setCards] = useState(null);
   const [forecast, setForecast] = useState(undefined);
   const [date, setDate] = useState(null);
@@ -94,7 +120,7 @@ export default function MapPage() {
   };
 
   return (
-    <main className="map-page">
+    <main className={`map-page basemap-${basemap}`}>
       <Patterns />
       <section className="map-col">
         <div className="map-bar">
@@ -107,8 +133,18 @@ export default function MapPage() {
         </div>
         <div className="map-wrap">
           <MapContainer center={[14.37, 121.2]} zoom={10} className="map">
-            <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                       url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {basemap === "satellite" ? (
+              <>
+                <TileLayer key="sat" maxNativeZoom={18}
+                           attribution="Imagery &copy; Esri, Maxar, Earthstar Geographics"
+                           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+                <TileLayer key="sat-labels" className="sat-labels"
+                           url="https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}" />
+              </>
+            ) : (
+              <TileLayer key="osm" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            )}
             <GeoJSON key={`${date}-${zoneId}`} data={data} style={style}
                      onEachFeature={(f, layer) => {
                        const p = f.properties;
@@ -118,6 +154,7 @@ export default function MapPage() {
                      }} />
             <FitBounds data={data} />
           </MapContainer>
+          <BasemapToggle value={basemap} onChange={setBasemap} />
           <ul className="legend" aria-label="Legend">
             {Object.keys(LEVELS).map((name) => (
               <li key={name}><span className={`key key-${name.toLowerCase()}`} />{name}</li>
