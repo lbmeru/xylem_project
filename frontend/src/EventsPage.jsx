@@ -3,9 +3,6 @@ import { api } from "./api.js";
 import { levelOf } from "./levels.js";
 
 const RESULT = { hit: "Hit", miss: "Miss", no_data: "No data" };
-const monthLabel = (ym) => (ym
-  ? new Date(ym + "-01T00:00:00Z").toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" })
-  : "");
 
 export default function EventsPage() {
   const [bt, setBt] = useState(null);
@@ -21,7 +18,6 @@ export default function EventsPage() {
   if (!bt) return <main className="notice"><p>Loading…</p></main>;
 
   const s = bt.summary;
-  const undated = events.filter((e) => !e.date);
   const byId = Object.fromEntries(events.map((e) => [e.id, e]));
   const days = bt.meta.lookback_days;
   const anyApprox = bt.events.some((e) => byId[e.id]?.date_precision === "approx");
@@ -64,13 +60,6 @@ export default function EventsPage() {
                 </tr>
               );
             })}
-            {undated.map((e) => (
-              <tr key={e.id} className="undated">
-                <td>{e.place}</td>
-                <td colSpan="4">{monthLabel(e.month)}. No exact date, so not tested.</td>
-                <td><Source ev={e} /></td>
-              </tr>
-            ))}
             {bt.skipped?.filter((x) => x.reason !== "no exact date").map((x) => (
               <tr key={x.id} className="undated">
                 <td>{byId[x.id]?.place || x.id}</td>
