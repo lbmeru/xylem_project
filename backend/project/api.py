@@ -27,7 +27,7 @@ class Store:
         mtime = path.stat().st_mtime
         hit = self._cache.get(str(path))
         if not hit or hit[0] != mtime:
-            self._cache[str(path)] = (mtime, json.loads(path.read_text()))
+            self._cache[str(path)] = (mtime, json.loads(path.read_text(encoding="utf-8")))
         return self._cache[str(path)][1]
 
     def daily(self):
@@ -39,7 +39,7 @@ class Store:
 
 def create_app(output_dir: Path | None = None, data_dir: Path | None = None) -> FastAPI:
     store = Store(output_dir or C.OUTPUT_DIR, data_dir or C.DATA_DIR)
-    app = FastAPI(title="Bantay Lawa API")
+    app = FastAPI(title="Lake Breathing API")
     origins = os.getenv("BL_CORS_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
     app.add_middleware(CORSMiddleware, allow_origins=origins, allow_methods=["GET"], allow_headers=["*"])
 

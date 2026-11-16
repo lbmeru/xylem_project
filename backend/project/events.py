@@ -39,8 +39,8 @@ def build(events_in: list[dict], zones: dict) -> list[dict]:
 
 
 def run() -> None:
-    events_in = json.loads((C.DATA_DIR / "events_input.json").read_text())
+    events_in = json.loads((C.DATA_DIR / "events_input.json").read_text(encoding="utf-8"))
     events = build(events_in, load_zones())
-    (C.OUTPUT_DIR / "events.json").write_text(json.dumps(events, indent=2, ensure_ascii=False))
+    (C.OUTPUT_DIR / "events.json").write_text(json.dumps(events, indent=2, ensure_ascii=False), encoding="utf-8")
     missing = [e["id"] for e in events if not e.get("date")]
     print(f"events.json: {len(events)} events; {len(missing)} still need an exact date: {missing}")

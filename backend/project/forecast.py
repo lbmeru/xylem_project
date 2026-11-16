@@ -245,7 +245,7 @@ def run() -> None:
     from .ndci import build_daily
     from .zones import load_zones
 
-    daily = json.loads((C.OUTPUT_DIR / "daily_risk.json").read_text())
+    daily = json.loads((C.OUTPUT_DIR / "daily_risk.json").read_text(encoding="utf-8"))
     zone_ids = [f["properties"]["zone_id"] for f in load_zones()["features"]]
     W.fetch_forecast()
     nd = build_daily()
@@ -253,7 +253,7 @@ def run() -> None:
     obs = {z: nd[nd["zone_id"] == z].set_index("date")["ndci"].sort_index() for z in zone_ids}
     weather = {z: W.load(z).combine_first(W.load_forecast(z)) for z in zone_ids}
     result = run_forecast(obs, weather, daily["meta"]["thresholds"], pd.Timestamp.today().normalize())
-    (C.OUTPUT_DIR / "forecast.json").write_text(json.dumps(result, separators=(",", ":"), allow_nan=False))
+    (C.OUTPUT_DIR / "forecast.json").write_text(json.dumps(result, separators=(",", ":"), allow_nan=False), encoding="utf-8")
     v = result["meta"]["validation"]
     print(f"forecast.json: {len(zone_ids)} zones, model: {result['meta']['model']}")
     if "test_mae" in v:

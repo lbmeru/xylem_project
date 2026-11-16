@@ -45,7 +45,7 @@ def _lake_bundled() -> dict:
     path = C.DATA_DIR / "lake.geojson"
     if not path.exists():
         raise SystemExit(f"{path} is missing. Copy lake.geojson into the data folder.")
-    gj = json.loads(path.read_text())
+    gj = json.loads(path.read_text(encoding="utf-8"))
     return gj.get("geometry", gj)
 
 
@@ -106,12 +106,12 @@ def run() -> dict:
     C.CACHE_DIR.mkdir(parents=True, exist_ok=True)
     C.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     lake, src = fetch_lake_polygon()
-    (C.CACHE_DIR / "lake.geojson").write_text(json.dumps(lake))
+    (C.CACHE_DIR / "lake.geojson").write_text(json.dumps(lake), encoding="utf-8")
     zones = build_zones(lake, C.SHORE_BUFFER_EE_M if src == "gee" else C.SHORE_BUFFER_M)
-    (C.OUTPUT_DIR / "zones.json").write_text(json.dumps(zones, separators=(",", ":")))
+    (C.OUTPUT_DIR / "zones.json").write_text(json.dumps(zones, separators=(",", ":")), encoding="utf-8")
     print(f"zones.json: {len(zones['features'])} zones (outline from {src})")
     return zones
 
 
 def load_zones() -> dict:
-    return json.loads((C.OUTPUT_DIR / "zones.json").read_text())
+    return json.loads((C.OUTPUT_DIR / "zones.json").read_text(encoding="utf-8"))

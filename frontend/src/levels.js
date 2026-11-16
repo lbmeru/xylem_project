@@ -1,8 +1,8 @@
 export const LEVELS = {
-  Low:     { color: "#3d8c7a", letter: "L", meaning: "0 or 1 of the 3 signals is yes" },
-  Watch:   { color: "#e3a72f", letter: "W", meaning: "2 of the 3 signals are yes" },
-  High:    { color: "#c0392b", letter: "H", meaning: "All 3 signals are yes" },
-  Unknown: { color: "#9aa6aa", letter: "?", meaning: "No clear satellite image in the last 10 days, or weather data is missing" },
+  Low:     { color: "#3d8c7a", letter: "L", meaning: "Normal conditions" },
+  Watch:   { color: "#e3a72f", letter: "W", meaning: "2 warning signs. Stay alert" },
+  High:    { color: "#c0392b", letter: "H", meaning: "All 3 warning signs. Act now" },
+  Unknown: { color: "#9aa6aa", letter: "?", meaning: "No recent satellite image" },
 };
 
 export const levelOf = (l) => LEVELS[l] || LEVELS.Unknown;

@@ -1,6 +1,6 @@
 # HOW TO RUN
 
-# Xylem Project: Laguna de Bay Fish-Kill Risk Prototype
+# Lake Breathing, First Form: Enhanced Monitoring System
 
 A web map that gives each zone of Laguna de Bay a daily fish-kill risk level (Low, Watch, High, Unknown) from free satellite and weather data.
 

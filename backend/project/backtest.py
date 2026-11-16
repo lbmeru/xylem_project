@@ -72,10 +72,10 @@ def run_backtest(daily: dict, events: list[dict]) -> dict:
 
 
 def run() -> None:
-    daily = json.loads((C.OUTPUT_DIR / "daily_risk.json").read_text())
-    events = json.loads((C.OUTPUT_DIR / "events.json").read_text())
+    daily = json.loads((C.OUTPUT_DIR / "daily_risk.json").read_text(encoding="utf-8"))
+    events = json.loads((C.OUTPUT_DIR / "events.json").read_text(encoding="utf-8"))
     result = run_backtest(daily, events)
-    (C.OUTPUT_DIR / "backtest.json").write_text(json.dumps(result, indent=2))
+    (C.OUTPUT_DIR / "backtest.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(result["summary"], indent=2))
     if result["skipped"]:
         print("skipped:", result["skipped"])

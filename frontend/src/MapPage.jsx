@@ -73,8 +73,7 @@ export default function MapPage() {
   }, [date]);
 
   if (error && !meta) {
-    return <main className="notice"><h1>Can't load risk data</h1><p>{error}</p>
-      <p>Start the API with <code>uvicorn project.api:app</code> and run the data pipeline first.</p></main>;
+    return <main className="notice"><h1>Can't load risk data</h1><p>Please try again later.</p></main>;
   }
   if (!meta || !data) return <main className="notice"><p>Loading map…</p></main>;
 
@@ -101,11 +100,6 @@ export default function MapPage() {
               <li key={k}><strong>{tally[k]}</strong>{k}</li>
             ))}
           </ul>
-          <p className="asof">
-            {isLatest
-              ? <>Risk as of <strong>{meta.as_of}</strong>. Weather data arrives about 5 days late, so this is not live.</>
-              : <>Showing <strong>{date}</strong>. Latest data is from {meta.last_date}.</>}
-          </p>
         </div>
         <div className="map-wrap">
           <MapContainer center={[14.37, 121.2]} zoom={10} className="map">
@@ -114,8 +108,8 @@ export default function MapPage() {
             <GeoJSON key={`${date}-${zoneId}`} data={data} style={style}
                      onEachFeature={(f, layer) => {
                        const p = f.properties;
-                       layer.bindTooltip(p.ndci == null ? "no image" : p.ndci.toFixed(2),
-                                         { permanent: true, direction: "center", className: "sounding", opacity: 1 });
+                       layer.bindTooltip(`${p.label}: ${LEVELS[p.level] ? p.level : "Unknown"}`,
+                                         { sticky: true, direction: "top", className: "zone-tip" });
                        layer.on("click", () => setZoneId(p.zone_id));
                      }} />
             <FitBounds data={data} />
@@ -124,7 +118,6 @@ export default function MapPage() {
             {Object.keys(LEVELS).map((name) => (
               <li key={name}><span className={`key key-${name.toLowerCase()}`} />{name}</li>
             ))}
-            <li className="legend-note">Number on each zone: algae reading (NDCI)</li>
           </ul>
         </div>
       </section>

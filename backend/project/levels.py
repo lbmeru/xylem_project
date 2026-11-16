@@ -111,5 +111,5 @@ def run() -> None:
     zone_ids = [f["properties"]["zone_id"] for f in load_zones()["features"]]
     weather = {z: W.load(z) for z in zone_ids}
     result = build(build_daily(), weather, zone_ids)
-    (C.OUTPUT_DIR / "daily_risk.json").write_text(json.dumps(result, separators=(",", ":")))
+    (C.OUTPUT_DIR / "daily_risk.json").write_text(json.dumps(result, separators=(",", ":")), encoding="utf-8")
     print(f"daily_risk.json: {len(zone_ids)} zones x {len(result['dates'])} days, as of {result['meta']['as_of']}")

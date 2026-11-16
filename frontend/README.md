@@ -1,4 +1,4 @@
-# Bantay Lawa web (React + Vite)
+# Lake Breathing web (React + Vite)
 
     npm install
     npm run dev        # http://localhost:5173, proxies /api to http://localhost:8000

@@ -48,7 +48,7 @@ def header(c, title, sub, page):
     c.setFillColor(white); c.setFont("Helvetica-Bold", 22); c.drawString(M, H - 42, title)
     c.setFont("Helvetica", 10.5); c.drawString(M, H - 62, sub)
     c.setFillColor(MUTED); c.setFont("Helvetica", 8)
-    c.drawString(M, 24, "Bantay Lawa · A simple rule checked on a few news-reported fish kills, not a guarantee.")
+    c.drawString(M, 24, "Lake Breathing · A simple rule checked on a few news-reported fish kills, not a guarantee.")
     c.drawRightString(W - M, 24, f"Page {page} of 3")
 
 
@@ -59,7 +59,7 @@ def draw_zone_grid(c, zones_path, x, y, w, h):
         para(c, "Zone grid goes here. Run the data pipeline, then run build_blueprint.py again "
                 "to draw the zones.", x + 20, y + h / 2 + 10, w - 40, color=MUTED, size=10)
         return
-    feats = json.loads(Path(zones_path).read_text())["features"]
+    feats = json.loads(Path(zones_path).read_text(encoding="utf-8"))["features"]
     rings = []
     for f in feats:
         g = f["geometry"]
@@ -92,7 +92,7 @@ def draw_zone_grid(c, zones_path, x, y, w, h):
 
 def sheet1(c, zones_path):
     header(c, "Which zones are at risk", "Sheet 1 of 3 · Zones and levels", 1)
-    y = para(c, "Laguna de Bay is split into squares of about 5 km called zones. Every day the Bantay Lawa "
+    y = para(c, "Laguna de Bay is split into squares of about 5 km called zones. Every day the Lake Breathing "
                 "map gives each zone one of four levels. Find your zone on the grid, then check its level "
                 "in the app.", M, H - 96, W - 2 * M, size=10.5)
     gy = y - 12
@@ -151,7 +151,7 @@ def sheet2(c, cards):
 
 def sheet3(c):
     header(c, "Field check log", "Sheet 3 of 3 · Blank form to copy and keep", 3)
-    y = para(c, "For operators who own an oxygen kit or meter. Bantay Lawa collects no readings itself, "
+    y = para(c, "For operators who own an oxygen kit or meter. Lake Breathing collects no readings itself, "
                 "so this log is only for your own records.", M, H - 96, W - 2 * M, size=10.5)
     cols = [("Date", 70), ("Time", 52), ("Zone", 80), ("Dissolved oxygen reading", 108),
             ("Water color", 100), ("Dead fish count", 102)]
@@ -179,12 +179,12 @@ def sheet3(c):
 
 
 def build(out, zones_path, cards_path):
-    cards = json.loads(Path(cards_path).read_text())
+    cards = json.loads(Path(cards_path).read_text(encoding="utf-8"))
     for lv in ("Low", "Watch", "High", "Unknown"):
         for a in cards["levels"][lv]["actions"]:
             assert a.get("source"), f"Action without a source: {a['text']}"
     c = canvas.Canvas(str(out), pagesize=letter)
-    c.setTitle("Bantay Lawa: response guide for fish cage operators")
+    c.setTitle("Lake Breathing: response guide for fish cage operators")
     sheet1(c, zones_path); c.showPage()
     sheet2(c, cards); c.showPage()
     sheet3(c); c.showPage()

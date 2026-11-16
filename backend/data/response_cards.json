@@ -4,7 +4,7 @@
       "actions": [
         {
           "text": "Normal routine. Check the app weekly.",
-          "source": "Bantay Lawa app guidance"
+          "source": "Lake Breathing app guidance"
         }
       ]
     },
@@ -12,7 +12,7 @@
       "actions": [
         {
           "text": "Check the app daily.",
-          "source": "Bantay Lawa app guidance"
+          "source": "Lake Breathing app guidance"
         },
         {
           "text": "Keep stocking numbers appropriate so fish do not run short of oxygen.",
@@ -40,7 +40,7 @@
       "actions": [
         {
           "text": "No clear satellite image in the last 10 days. Use your own field checks.",
-          "source": "Bantay Lawa app guidance"
+          "source": "Lake Breathing app guidance"
         }
       ]
     }

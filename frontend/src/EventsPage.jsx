@@ -3,6 +3,9 @@ import { api } from "./api.js";
 import { levelOf } from "./levels.js";
 
 const RESULT = { hit: "Hit", miss: "Miss", no_data: "No data" };
+const monthLabel = (ym) => (ym
+  ? new Date(ym + "-01T00:00:00Z").toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" })
+  : "");
 
 export default function EventsPage() {
   const [bt, setBt] = useState(null);
@@ -14,7 +17,7 @@ export default function EventsPage() {
     api.events().then(setEvents).catch(() => {});
   }, []);
 
-  if (error) return <main className="notice"><h1>Can't load results</h1><p>{error}</p></main>;
+  if (error) return <main className="notice"><h1>Can't load results</h1><p>Please try again later.</p></main>;
   if (!bt) return <main className="notice"><p>Loading…</p></main>;
 
   const s = bt.summary;
@@ -25,14 +28,14 @@ export default function EventsPage() {
 
   return (
     <main className="events-page">
-      <h1>How the rule did on past fish kills</h1>
-      <p className="lede">
-        We looked at the {days} days before each of {s.events_tested} reported fish kills.
-        {" "}<strong>{s.hits}</strong> {s.hits === 1 ? "zone" : "zones"} showed Watch or High at least once,
-        and <strong>{s.misses}</strong> never did{s.no_data > 0 && <>; <strong>{s.no_data}</strong> had no data</>}.
-        Across the whole record, <strong>{s.false_alarm_zone_weeks}</strong> of {s.zone_weeks_high} zone-weeks
-        at High had no reported fish kill.
-      </p>
+      <h1>Did the map warn before past fish kills?</h1>
+      <p className="lede">Hit means the zone showed Watch or High at least once in the {days} days before.</p>
+      <ul className="tally counts" aria-label="Results">
+        <li><strong>{s.hits}</strong>{s.hits === 1 ? "hit" : "hits"}</li>
+        <li><strong>{s.misses}</strong>{s.misses === 1 ? "miss" : "misses"}</li>
+        <li><strong>{s.no_data}</strong>no data</li>
+      </ul>
+      <p>{s.false_alarm_zone_weeks} of {s.zone_weeks_high} High zone-weeks had no reported fish kill.</p>
 
       <div className="table-scroll">
         <table>
@@ -57,42 +60,40 @@ export default function EventsPage() {
                     </span>
                   </td>
                   <td><span className={`result ${e.result}`}>{RESULT[e.result]}</span></td>
-                  <td>
-                    {ev?.source_url
-                      ? <a href={ev.source_url} target="_blank" rel="noreferrer">{ev.source_name || "Link"}</a>
-                      : <span className="muted">{ev?.source_name || ""}</span>}
-                  </td>
+                  <td><Source ev={ev} /></td>
                 </tr>
               );
             })}
             {undated.map((e) => (
               <tr key={e.id} className="undated">
-                <td>{e.place}</td><td colSpan="5">Reported {e.month || ""}. Needs an exact date before it can be tested.</td>
+                <td>{e.place}</td>
+                <td colSpan="4">{monthLabel(e.month)}. No exact date, so not tested.</td>
+                <td><Source ev={e} /></td>
               </tr>
             ))}
             {bt.skipped?.filter((x) => x.reason !== "no exact date").map((x) => (
               <tr key={x.id} className="undated">
-                <td>{byId[x.id]?.place || x.id}</td><td colSpan="5">Not tested: {x.reason}.</td>
+                <td>{byId[x.id]?.place || x.id}</td>
+                <td colSpan="4">Not tested.</td>
+                <td><Source ev={byId[x.id]} /></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {anyApprox && (
-        <p className="muted table-note">
-          ~ The news gave no exact day. The date is the closest day the reports give, such as the first collection or report date.
-        </p>
-      )}
+      {anyApprox && <p className="muted table-note">~ Approximate date.</p>}
 
-      <section className="about" aria-labelledby="about-h">
-        <h2 id="about-h">About this check</h2>
-        <p>
-          Bantay Lawa is a simple rule, not a trained model, checked against about {s.events_total} fish kills
-          reported in the news. That is too few to say how accurate it is, and it is not a guarantee that a
-          zone is safe or unsafe. Unreported fish kills would turn some false alarms into correct warnings.
-        </p>
-        <p className="muted">Data through {bt.meta.as_of}.</p>
-      </section>
+      <p className="about-line">
+        A simple rule checked on {s.events_tested} news-reported fish kills. Too few to measure accuracy, and not
+        a guarantee. <a href="#/about">About this project</a>
+      </p>
     </main>
   );
+}
+
+function Source({ ev }) {
+  if (!ev) return null;
+  return ev.source_url
+    ? <a href={ev.source_url} target="_blank" rel="noreferrer">{ev.source_name || "Link"}</a>
+    : <span className="muted">{ev.source_name || ""}</span>;
 }
